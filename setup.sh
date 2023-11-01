@@ -20,6 +20,7 @@ tar -xvf /sdcard/glibc_prefix.tar.xz -C $PREFIX
 echo -e "
 1.Wine 8.0 Stable(Adreno 7xx users recommended)
 2.Wine 8.14 Devel
+3.Wine 8.22 GE
 "
 read -p "Select a wine version to install:" installchoice
 
@@ -31,6 +32,10 @@ case $installchoice in
 2)
     [[ ! -f /sdcard/wine-8.14-amd64.tar.xz ]] && wget https://github.com/Pipetto-crypto/androBox/releases/download/wine/wine-8.14-amd64.tar.xz -P /sdcard
     tar -xvf /sdcard/wine-8.14-amd64.tar.xz -C $PREFIX/glibc/opt
+    ;;
+3)
+    [[ ! -f /sdcard/wine-GE-8.22-amd64.tar.xz ]] && wget https://github.com/GabiAle97/androBox/releases/download/wine-GE/wine-GE-8.22-amd64.tar.xz -P /sdcard
+    tar -xvf /sdcard/wine-GE-8.22-amd64.tar.xz -C $PREFIX/glibc/opt
     ;;
 esac
 
