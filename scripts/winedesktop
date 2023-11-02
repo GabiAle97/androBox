@@ -1,14 +1,31 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+oldloader(){
+
+export CLASSPATH=/data/data/com.termux/files/usr/glibc/loader.apk
+unset LD_LIBRARY_PATH LD_PRELOAD
+exec /system/bin/app_process / com.termux.x11.Loader >/dev/null 2>&1 &
+
+}
+
+
+
 if [ "$(pidof app_process)" == "" ]
 then
-     termux-x11 >/dev/null 2>&1 &
-     sleep 7
+     if [ $1 == "-ol" ]
+     then
+          oldloader
+          sleep 7
+     else 
+          termux-x11 >/dev/null 2>&1 &
+          sleep 7
+     fi
 fi
 
 screenres=$(DISPLAY=:0 xrandr | grep current | awk '{print $8$9$10}' | tr -d ,)
 [[ -z $(grep -w "checkres=disabled" $HOME/.androBox) ]] && [[ -z $(ps -aux | grep "[w]atch" | awk '{print $2}') ]] && $PREFIX/glibc/opt/WinScripts/checkres.sh &
 
+am start -n com.termux.x11/com.termux.x11.MainActivity >/dev/null 2>&1
 wine explorer /desktop=shell,$screenres $PREFIX/glibc/opt/WinScripts/startup.bat
 
 if [ "$(grep -w 'checkres=disabled' $HOME/.androBox)" == "" ]

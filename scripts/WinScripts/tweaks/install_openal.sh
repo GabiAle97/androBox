@@ -3,4 +3,5 @@
 export PATH=/data/data/com.termux/files/usr/bin
 unset LD_LIBRARY_PATH
 
-xterm -e winetricks openal
+xterm -e $PREFIX/glibc/opt/WinScripts/winetricks.sh openal
+$PREFIX/glibc/opt/WinScripts/restart.sh

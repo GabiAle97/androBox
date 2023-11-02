@@ -14,8 +14,35 @@ then
      sleep 25
 fi
 
+if [ ! -d ~/storage ]
+then
+     echo -e "\nStorage is still not set, I will retry again"
+     termux-setup-storage
+     sleep 25
+fi
+
+if [ ! -d ~/storage ]
+then
+     echo -e "I couldn't setup storage, I will leave now"
+     exit
+fi
+
+if [ -d ~/storage ]
+then
+     touch /sdcard/tmp.txt
+     [[ ! -f /sdcard/tmp.txt ]] && echo -e "Seems like storage permissions are not set properly. I can't do anything else, set them manually and retry" && exit
+     rm -rf /sdcard/tmp.txt
+fi
+
 [[ ! -f /sdcard/glibc_prefix.tar.xz ]] && wget https://github.com/Pipetto-crypto/androBox/releases/download/glibc_prefix/glibc_prefix.tar.xz -P /sdcard
+
+if [ -f /sdcard/glibc_prefix.tar.xz ]
+then
 tar -xvf /sdcard/glibc_prefix.tar.xz -C $PREFIX
+else
+     echo -e "It seems that the glibc prefix didn't download properly, exiting now. Please make sure you have a good internet connection and retry"
+     exit
+fi
 
 echo -e "
 1.Wine 8.0 Stable(Adreno 7xx users recommended)
@@ -55,6 +82,8 @@ echo "check_certificate = off" > $HOME/.wgetrc
 
 rm -rf $HOME/androBox && rm -rf $HOME/.wine
 wine wineboot
+sleep 3
+am start -n com.termux.x11/com.termux.x11.MainActivity >/dev/null 2>&1
 update-scripts
 pfxupdate
 

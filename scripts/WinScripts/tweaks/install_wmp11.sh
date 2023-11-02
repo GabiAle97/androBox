@@ -3,4 +3,5 @@
 export PATH=/data/data/com.termux/files/usr/bin
 unset LD_LIBRARY_PATH
 
-xterm -e winetricks wmp11
+xterm -e $PREFIX/glibc/opt/WinScripts/winetricks.sh wmp11
+$PREFIX/glibc/opt/WinScripts/restart.sh
