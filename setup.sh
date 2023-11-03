@@ -62,7 +62,8 @@ case $installchoice in
     ;;
 3)
     [[ ! -f /sdcard/wine-GE-8.22-amd64.tar.xz ]] && wget https://github.com/GabiAle97/androBox/releases/download/wine-GE/wine-GE-8.22-amd64.tar.xz -P /sdcard
-    tar -xvf /sdcard/wine-GE-8.22-amd64.tar.xz -C $PREFIX/glibc/opt
+    mkdir $PREFIX/glibc/opt/wine
+    tar -xvf /sdcard/wine-GE-8.22-amd64.tar.xz -C $PREFIX/glibc/opt/wine
     ;;
 esac
 
